@@ -9,7 +9,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "start": "node server/index.js",
-    "install:server": "cd server && npm install"
+    "install:server": "cd server && npm install && npm rebuild sqlite3 --build-from-source"
   },
   "dependencies": {
     "leaflet": "^1.9.4",
