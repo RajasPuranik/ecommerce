@@ -78,7 +78,7 @@ app.post('/api/admin/update-status', (req, res) => {
 });
 
 // Catch-all route to serve React index.html for unknown routes
-app.get('*', (req, res) => {
+app.get(/.*/, (req, res) => {
   res.sendFile(path.join(__dirname, '../dist/index.html'));
 });
 
