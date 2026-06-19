@@ -1,11 +1,15 @@
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
 const db = require('./db');
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Serve React Frontend (dist folder)
+app.use(express.static(path.join(__dirname, '../dist')));
 
 const generateOrderId = () => 'ORD_' + Math.random().toString(36).substr(2, 9).toUpperCase();
 
@@ -73,5 +77,10 @@ app.post('/api/admin/update-status', (req, res) => {
   });
 });
 
-const PORT = 5000;
-app.listen(PORT, () => console.log(`Backend server running on http://localhost:${PORT}`));
+// Catch-all route to serve React index.html for unknown routes
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../dist/index.html'));
+});
+
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Backend server running on port ${PORT}`));
